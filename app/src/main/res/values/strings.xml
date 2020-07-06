@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">News App</string>
-    <string name="no_news_found">No News Found</string>
-    <string name="device_offline">Could not connect to network</string>
+    <string name="no_news">No News Found</string>
     <string name="guardian_api_key">31d856fe-4064-4958-8d4d-a40d413c37f8</string>
     <string name="menu_title">News List</string>
     <string name="search_hint">Search a News...</string>
@@ -11,25 +10,24 @@
     <string name="settings_min_date_label">News From Date</string>
     <string name="settings_min_date_default_value" translatable="false">2019-01-01</string>
     <string name="settings_min_date_key" translatable="false">minimum_date</string>
-
     <string name="settings_select_section_label">Section Selected</string>
-    <string name="settings_select_section_default_value" translatable="false">technology</string>
+    <string name="settings_select_section_default_value" translatable="false">politics</string>
     <string name="settings_select_section_key" translatable="false">select_section</string>
 
     <string-array name="section_labels">
-        <item>Politics</item>
-        <item>Lifestyle</item>
-        <item>Technology</item>
-        <item>Culture</item>
-        <item>Sport</item>
+        <item>Stage</item>
+        <item>Books</item>
+        <item>Football</item>
+        <item>World News</item>
+        <item>Crosswords</item>
     </string-array>
 
     <string-array name="section_values">
-        <item>politics</item>
-        <item>lifeandstyle</item>
-        <item>technology</item>
-        <item>culture</item>
-        <item>sport</item>
+        <item>stage</item>
+        <item>books</item>
+        <item>football</item>
+        <item>world</item>
+        <item>crosswords</item>
     </string-array>
 
 </resources>

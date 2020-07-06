@@ -1,7 +1,6 @@
 package com.example.newsapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
@@ -18,10 +17,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -30,10 +27,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
    com.google.android.material.appbar.MaterialToolbar toolbar;
 
    private static final String TAG = MainActivity.class.getSimpleName();
-   private String query = "politics";
-   private static final String GUARDIAN_API_REQUEST_URL = "https://content.guardianapis.com/search";
-   private static final int STORY_LOADER_ID = 1;
-   private NewsAdapter mAdapter;
+   private NewsAdapter newsAdapter;
+   private static final String GUARDIAN_API_URL = "https://content.guardianapis.com/search";
+   private static final int STORY_ID = 1;
 
    @BindView(R.id.empty_view)
    TextView emptyStateTextView;
@@ -44,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
    @BindView(R.id.news_list)
    ListView listView;
 
-
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
@@ -54,12 +49,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
       setSupportActionBar(toolbar);
 
       ButterKnife.bind(this);
-      mAdapter = new NewsAdapter(this, new ArrayList<News>());
-      listView.setAdapter(mAdapter);
+      newsAdapter = new NewsAdapter(this, new ArrayList<News>());
+      listView.setAdapter(newsAdapter);
       listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
          @Override
          public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            News currentNews = mAdapter.getItem(i);
+            News currentNews = newsAdapter.getItem(i);
             Uri storyUri = Uri.parse(currentNews.getUrl());
             Intent websiteIntent = new Intent(Intent.ACTION_VIEW, storyUri);
             startActivity(websiteIntent);
@@ -70,37 +65,37 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
       NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
       if (networkInfo != null && networkInfo.isConnected()) {
          LoaderManager loaderManager = getLoaderManager();
-         loaderManager.initLoader(STORY_LOADER_ID, null, this);
+         loaderManager.initLoader(STORY_ID, null, this);
       } else {
          loadingIndicatorView.setVisibility(View.GONE);
-         emptyStateTextView.setText(R.string.device_offline);
+         emptyStateTextView.setText("Could not connect to network");
       }
    }
 
    public Loader<List<News>> onCreateLoader(int i, Bundle bundle) {
-      Uri baseUri = Uri.parse(GUARDIAN_API_REQUEST_URL);
-      Uri.Builder uriBuilder = baseUri.buildUpon();
+      Uri baseUri = Uri.parse(GUARDIAN_API_URL);
+      Uri.Builder builder = baseUri.buildUpon();
       SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
       String minDate = sharedPrefs.getString(getString(R.string.settings_min_date_key), getString(R.string.settings_min_date_default_value));
       String section = sharedPrefs.getString(getString(R.string.settings_select_section_key), getString(R.string.settings_select_section_default_value));
-      uriBuilder.appendQueryParameter("api-key", getResources().getString(R.string.guardian_api_key));
-      uriBuilder.appendQueryParameter("show-tags", "contributor");
-      uriBuilder.appendQueryParameter("show-fields", "thumbnail");
-      uriBuilder.appendQueryParameter("from-date", minDate);
-      uriBuilder.appendQueryParameter("section", section);
+      builder.appendQueryParameter("api-key", getResources().getString(R.string.guardian_api_key));
+      builder.appendQueryParameter("show-tags", "contributor");
+      builder.appendQueryParameter("show-fields", "thumbnail");
+      builder.appendQueryParameter("from-date", minDate);
+      builder.appendQueryParameter("section", section);
 
-      return new NewsClassGetter(this, uriBuilder.toString());
+      return new NewsClassGetter(this, builder.toString());
    }
 
    @Override
    public void onLoadFinished(Loader<List<News>> loader, List<News> stories) {
       loadingIndicatorView.setVisibility(View.GONE);
-      emptyStateTextView.setText(R.string.no_news_found);
-      mAdapter.clear();
+      emptyStateTextView.setText(R.string.no_news);
+      newsAdapter.clear();
 
       if (stories != null && !stories.isEmpty()) {
          emptyStateTextView.setVisibility(View.GONE);
-         mAdapter.addAll(stories);
+         newsAdapter.addAll(stories);
       }
       else
          emptyStateTextView.setVisibility(View.VISIBLE);
@@ -108,9 +103,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
    @Override
    public void onLoaderReset(Loader<List<News>> loader) {
-      mAdapter.clear();
+      newsAdapter.clear();
    }
-
 
 
    @Override
@@ -129,6 +123,5 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
       }
       return super.onOptionsItemSelected(item);
    }
-
 
 }

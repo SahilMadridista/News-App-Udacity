@@ -30,7 +30,7 @@ public class SettingsActivity extends AppCompatActivity {
          super.onCreate(savedInstanceState);
          addPreferencesFromResource(R.xml.settings_main);
 
-         Preference minDate = findPreference(getString(R.string.settings_min_date_key));
+         Preference minDate = findPreference("getString(R.string.settings_min_date_key)");
          bindPreferenceSummaryToValue(minDate);
 
          Preference selectSection = findPreference(getString(R.string.settings_select_section_key));

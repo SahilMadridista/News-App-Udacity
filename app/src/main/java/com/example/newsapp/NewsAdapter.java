@@ -26,32 +26,32 @@ public class NewsAdapter extends ArrayAdapter<News> {
    @Override
    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-      ViewHolder holder;
-      View listItemView = convertView;
+      ViewHolder viewHolder;
+      View listviewofnews = convertView;
       News news = getItem(position);
-      if (listItemView == null){
-         listItemView = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
-         holder = new ViewHolder(listItemView);
-         listItemView.setTag(holder);
+      if (listviewofnews == null){
+         listviewofnews = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
+         viewHolder = new ViewHolder(listviewofnews);
+         listviewofnews.setTag(viewHolder);
       }
       else
-         holder = (ViewHolder) listItemView.getTag();
-      holder.titleTextView.setText(news.getTitle());
-      holder.categoryTextView.setText(news.getcategoryLine());
+         viewHolder = (ViewHolder) listviewofnews.getTag();
+      viewHolder.titleTextView.setText(news.getTitle());
+      viewHolder.categoryTextView.setText(news.getcategoryLine());
       Date date = news.getDate();
       if (date != null)
-         holder.dateTextView.setText(formatDate(date));
-      holder.sectionTextView.setText(news.getSection());
+         viewHolder.dateTextView.setText(formatDate(date));
+      viewHolder.sectionTextView.setText(news.getSection());
       String imageUrl = news.getImageUrl();
       if (!imageUrl.isEmpty())
          Glide
                  .with(getContext())
                  .load(imageUrl)
-                 .into(holder.thumbnailImageView);
+                 .into(viewHolder.thumbnailImageView);
       else
-         holder.thumbnailImageView.setVisibility(View.GONE);
+         viewHolder.thumbnailImageView.setVisibility(View.GONE);
 
-      return listItemView;
+      return listviewofnews;
    }
 
    static class ViewHolder{
@@ -68,7 +68,9 @@ public class NewsAdapter extends ArrayAdapter<News> {
 
       public ViewHolder(View view){
          ButterKnife.bind(this, view);
+
       }
+
    }
 
    private String formatDate(Date dateObject) {

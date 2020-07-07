@@ -3,17 +3,17 @@
     android:title="@string/menu_title">
 
     <ListPreference
-        android:title="@string/settings_select_section_label"
+        android:title="@string/select_section"
         android:entries="@array/section_labels"
         android:entryValues="@array/section_values"
-        android:key="@string/settings_select_section_key"
-        android:defaultValue="@string/settings_min_date_default_value"/>
+        android:key="@string/select_section_key"
+        android:defaultValue="@string/settings_date"/>
 
     <EditTextPreference
-        android:title="@string/settings_min_date_label"
+        android:title="@string/minimun_date"
         android:inputType="date"
-        android:key="@string/settings_min_date_key"
+        android:key="@string/minimum_date_key"
         android:selectAllOnFocus="true"
-        android:defaultValue="@string/settings_min_date_default_value"/>
+        android:defaultValue="@string/settings_date"/>
 
 </PreferenceScreen>

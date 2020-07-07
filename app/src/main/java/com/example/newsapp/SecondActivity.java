@@ -4,7 +4,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
-import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -13,14 +12,12 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
-import java.util.Date;
-
-public class SettingsActivity extends AppCompatActivity {
+public class SecondActivity extends AppCompatActivity {
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
-      setContentView(R.layout.activity_settings);
+      setContentView(R.layout.activity_second);
    }
 
    public static class NewsPreferenceFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
@@ -30,11 +27,11 @@ public class SettingsActivity extends AppCompatActivity {
          super.onCreate(savedInstanceState);
          addPreferencesFromResource(R.xml.settings_main);
 
-         Preference minDate = findPreference("getString(R.string.settings_min_date_key)");
-         bindPreferenceSummaryToValue(minDate);
+         Preference minimum_Date = findPreference(getString(R.string.minimum_date_key));
+         bindPreferenceSummaryToValue(minimum_Date);
 
-         Preference selectSection = findPreference(getString(R.string.settings_select_section_key));
-         bindPreferenceSummaryToValue(selectSection);
+         Preference select_Section = findPreference(getString(R.string.select_section_key));
+         bindPreferenceSummaryToValue(select_Section);
       }
 
       @RequiresApi(api = Build.VERSION_CODES.N)
@@ -43,14 +40,14 @@ public class SettingsActivity extends AppCompatActivity {
          String stringValue = value.toString();
          if (preference instanceof ListPreference) {
             ListPreference listPreference = (ListPreference) preference;
-            int prefIndex = listPreference.findIndexOfValue(stringValue);
-            if (prefIndex >= 0) {
+            int index = listPreference.findIndexOfValue(stringValue);
+            if (index >= 0) {
                CharSequence[] labels = listPreference.getEntries();
-               preference.setSummary(labels[prefIndex]);
+               preference.setSummary(labels[index]);
             }
          } else {
             try {
-               Date date = new SimpleDateFormat("yyyy-MM-dd").parse(stringValue);
+               //Date date = new SimpleDateFormat("yyyy-MM-dd").parse(stringValue);
             } catch (Exception e) {
                Toast.makeText(getContext(), "Date format must be YYYY-MM-DD", Toast.LENGTH_LONG).show();
                return false;

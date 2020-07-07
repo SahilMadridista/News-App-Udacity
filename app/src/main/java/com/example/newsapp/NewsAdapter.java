@@ -36,20 +36,13 @@ public class NewsAdapter extends ArrayAdapter<News> {
       }
       else
          viewHolder = (ViewHolder) listviewofnews.getTag();
+      
       viewHolder.titleTextView.setText(news.getTitle());
       viewHolder.categoryTextView.setText(news.getcategoryLine());
       Date date = news.getDate();
       if (date != null)
          viewHolder.dateTextView.setText(formatDate(date));
       viewHolder.sectionTextView.setText(news.getSection());
-      String imageUrl = news.getImageUrl();
-      if (!imageUrl.isEmpty())
-         Glide
-                 .with(getContext())
-                 .load(imageUrl)
-                 .into(viewHolder.thumbnailImageView);
-      else
-         viewHolder.thumbnailImageView.setVisibility(View.GONE);
 
       return listviewofnews;
    }
@@ -63,8 +56,6 @@ public class NewsAdapter extends ArrayAdapter<News> {
       TextView dateTextView;
       @BindView(R.id.news_section)
       TextView sectionTextView;
-      @BindView(R.id.imageview)
-      ImageView thumbnailImageView;
 
       public ViewHolder(View view){
          ButterKnife.bind(this, view);

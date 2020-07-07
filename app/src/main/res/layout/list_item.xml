@@ -2,15 +2,8 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="@color/colorPrimaryDark"
     android:layout_height="wrap_content">
-
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:background="#000"
-        android:id="@+id/imageview">
-
-    </ImageView>
 
     <TextView
         android:layout_width="wrap_content"
@@ -19,14 +12,12 @@
         android:id="@+id/news_head"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:layout_toRightOf="@id/imageview"
-        android:layout_toEndOf="@id/imageview"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginEnd="10dp"
-        android:textColor="#000"
-        android:layout_marginTop="5dp">
+        android:textColor="#fff"
+        android:layout_marginTop="10dp">
 
     </TextView>
 
@@ -37,9 +28,8 @@
         android:layout_marginStart="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginEnd="10dp"
+        android:textColor="#fff"
         android:id="@+id/news_section"
-        android:layout_toRightOf="@id/imageview"
-        android:layout_toEndOf="@id/imageview"
         android:text="News Section"
         android:layout_below="@id/news_head"
         android:textSize="17sp">
@@ -53,9 +43,8 @@
         android:layout_marginStart="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginEnd="10dp"
+        android:textColor="#fff"
         android:id="@+id/news_category"
-        android:layout_toRightOf="@id/imageview"
-        android:layout_toEndOf="@id/imageview"
         android:text="News Category"
         android:layout_below="@id/news_section"
         android:textSize="15sp">
@@ -67,12 +56,12 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
+        android:textColor="#fff"
         android:layout_marginRight="10dp"
         android:layout_marginEnd="10dp"
         android:id="@+id/news_date"
-        android:layout_toRightOf="@id/imageview"
-        android:layout_toEndOf="@id/imageview"
         android:text="09/10/1998"
+        android:layout_marginBottom="10dp"
         android:layout_below="@id/news_category"
         android:textSize="15sp">
 

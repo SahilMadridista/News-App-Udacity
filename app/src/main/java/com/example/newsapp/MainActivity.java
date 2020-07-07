@@ -25,8 +25,6 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<News>> {
 
    com.google.android.material.appbar.MaterialToolbar toolbar;
-
-   private static final String TAG = MainActivity.class.getSimpleName();
    private NewsAdapter newsAdapter;
    private static final String GUARDIAN_API_URL = "https://content.guardianapis.com/search";
    private static final int STORY_ID = 1;
@@ -60,9 +58,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             startActivity(websiteIntent);
          }
       });
-      ConnectivityManager connMgr = (ConnectivityManager)
+      ConnectivityManager connectivityManager = (ConnectivityManager)
               getSystemService(Context.CONNECTIVITY_SERVICE);
-      NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+      assert connectivityManager != null;
+
+      NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
       if (networkInfo != null && networkInfo.isConnected()) {
          LoaderManager loaderManager = getLoaderManager();
          loaderManager.initLoader(STORY_ID, null, this);
@@ -76,9 +76,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
       Uri baseUri = Uri.parse(GUARDIAN_API_URL);
       Uri.Builder builder = baseUri.buildUpon();
       SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-      String minDate = sharedPrefs.getString(getString(R.string.settings_min_date_key), getString(R.string.settings_min_date_default_value));
-      String section = sharedPrefs.getString(getString(R.string.settings_select_section_key), getString(R.string.settings_select_section_default_value));
-      builder.appendQueryParameter("api-key", getResources().getString(R.string.guardian_api_key));
+      String minDate = sharedPrefs.getString(getString(R.string.minimum_date_key), getString(R.string.settings_date));
+      String section = sharedPrefs.getString(getString(R.string.select_section_key), getString(R.string.select_section_default_value));
+      builder.appendQueryParameter("api-key", getResources().getString(R.string.api_key));
       builder.appendQueryParameter("show-tags", "contributor");
       builder.appendQueryParameter("show-fields", "thumbnail");
       builder.appendQueryParameter("from-date", minDate);
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
    @Override
    public void onLoadFinished(Loader<List<News>> loader, List<News> stories) {
       loadingIndicatorView.setVisibility(View.GONE);
-      emptyStateTextView.setText(R.string.no_news);
+      emptyStateTextView.setText(R.string.no_news_found);
       newsAdapter.clear();
 
       if (stories != null && !stories.isEmpty()) {
@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
    public boolean onOptionsItemSelected(MenuItem item) {
       int id = item.getItemId();
       if (id == R.id.settings) {
-         Intent settingsIntent = new Intent(this, SettingsActivity.class);
+         Intent settingsIntent = new Intent(this, SecondActivity.class);
          startActivity(settingsIntent);
          return true;
       }
